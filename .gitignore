@@ -1,0 +1,6 @@
+.cache
+build
+*.elf
+*.smdh
+*.3dsx
+.clangd
