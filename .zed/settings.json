@@ -1,0 +1,15 @@
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{
+  "lsp": {
+    "clangd": {
+      "binary": {
+        "arguments": [
+          "--query-driver=/opt/devkitpro/devkitARM/bin/arm-none-eabi-g++"
+        ]
+      }
+    }
+  }
+}
