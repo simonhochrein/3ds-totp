@@ -43,7 +43,7 @@ const u32 get_code(const totp_key &key) {
   int bits = ((mac[offset] & 0x7f) << 24) | ((mac[offset + 1] & 0xff) << 16) |
              ((mac[offset + 2] & 0xff) << 8) | ((mac[offset + 3] & 0xff));
 
-  int code = bits % (int)pow(10, 6);
+  int code = bits % 1000000;
 
   return code;
 }
