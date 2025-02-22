@@ -1,5 +1,5 @@
 #pragma once
+#include <vector>
+#include <string>
 
-#include <stddef.h>
-
-size_t base32_decode(const unsigned char *coded, unsigned char *plain);
+std::string base32_decode(const std::string &coded);

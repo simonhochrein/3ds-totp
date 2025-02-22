@@ -4,3 +4,5 @@ build
 *.smdh
 *.3dsx
 .clangd
+cmake-build-debug
+cmake-build-release

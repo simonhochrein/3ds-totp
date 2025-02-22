@@ -6,10 +6,11 @@
 #include "scene.h"
 
 namespace totp {
-    class scan: public scene {
+    class scan final : public scene {
     public:
         scan();
-        [[nodiscard]] std::optional<scene_type> update();
+        ~scan() override;
+        [[nodiscard]] std::optional<scene_type> update() override;
     private:
         u16* camera_buffer;
         Handle mutex;
@@ -17,12 +18,9 @@ namespace totp {
         bool capturing;
         volatile bool finished;
         C3D_Tex *tex;
-        C2D_Image image;
-    private:
+        C2D_Image image{};
         static void cam_thread(scan* app);
         bool do_scan();
         void cleanup();
-    protected:
-        ~scan();
     };
 }
