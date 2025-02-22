@@ -1,13 +1,15 @@
 cmake_minimum_required(VERSION 3.30)
 project(TOTP)
 
+set(CMAKE_CXX_STANDARD 20)
+
 add_subdirectory(external)
 
 execute_process(COMMAND mkbcfnt -o ${CMAKE_CURRENT_BINARY_DIR}/firacode.bcfnt FiraCode-Regular.ttf WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 dkp_add_embedded_binary_library(firacode ${CMAKE_CURRENT_BINARY_DIR}/firacode.bcfnt)
 
-file(GLOB TOTP_FILES source/**/*.cpp source/*.cpp)
+file(GLOB TOTP_FILES source/**/*.cpp source/*.cpp include/**/*.h include/*.h)
 add_executable(totp ${TOTP_FILES})
 target_include_directories(totp PRIVATE include)
 target_link_libraries(totp PRIVATE citro2d citro3d tinyhmac quirc firacode)

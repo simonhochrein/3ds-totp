@@ -7,12 +7,12 @@
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
-    <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppGeneralOptions" type="string" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
+    <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppGeneralOptions" type="string" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeProjectFlavorService">
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
@@ -34,44 +34,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80782eb4-7a01-4c38-9289-977759542143" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Makefile.bak" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/external/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/external/tiny-hmac-c/error_log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/font_whitelist.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/store.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/vec2.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/store.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/b32decode.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/b32decode.h" afterDir="false" />
+    <list default="true" id="80782eb4-7a01-4c38-9289-977759542143" name="Changes" comment="Restructuring">
+      <change afterPath="$PROJECT_DIR$/include/uri.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/urlparser.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/utils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/urlparser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/otp_entry.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/otp_entry.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/totp.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/totp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/ui/list.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/ui/list.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/store.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/store.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/ui/scan.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/ui/scan.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/b32decode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/b32decode.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/otp_entry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/otp_entry.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/quirc/decode.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/quirc/decode.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/quirc/identify.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/quirc/identify.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/quirc/quirc.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/quirc/quirc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/quirc/quirc.h" beforeDir="false" afterPath="$PROJECT_DIR$/external/quirc/quirc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/quirc/quirc_internal.h" beforeDir="false" afterPath="$PROJECT_DIR$/external/quirc/quirc_internal.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/quirc/version_db.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/quirc/version_db.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/error_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/scripts/test_random_hash_sha1.py" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/scripts/test_random_hash_sha1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/scripts/test_random_hmac_sha1.py" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/scripts/test_random_hmac_sha1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/src/hmac.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/src/hmac.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/src/hmac.h" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/src/hmac.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/src/sha1.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/src/sha1.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/src/sha1.h" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/src/sha1.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/tests/test_golden_sha1.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/tests/test_golden_sha1.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/tests/test_hmac_sha1.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/tests/test_hmac_sha1.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/tests/test_stdin_sha1.c" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/tests/test_stdin_sha1.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/tiny-hmac-c/tiny-HMAC-c-main.zip" beforeDir="false" afterPath="$PROJECT_DIR$/external/tiny-hmac-c/tiny-HMAC-c-main.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/totp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/totp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/store.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/store.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/ui/list.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/ui/list.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/ui/scan.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/ui/scan.cpp" afterDir="false" />
     </list>
@@ -92,7 +67,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;simonhochrein&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/simonhochrein/3ds-totp.git&quot;,
+    &quot;accountId&quot;: &quot;a1db0fb3-e932-41fe-a0c2-726998418f3a&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/include/otp_entry.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/include/store.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/include/totp.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/include/ui/list.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/include/ui/scan.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/include/urlparser.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/source/b32decode.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MakefileLocalSettings">
@@ -141,6 +134,9 @@
     "CMake Application.totp_3dslink.executor": "Run",
     "CMake Application.totp_3dsx.executor": "Run",
     "CMake Application.totp_lime3ds.executor": "Run",
+    "Native Application.3dslink.executor": "Run",
+    "Native Application.Lime3DS.executor": "Run",
+    "Native Application.totp_3dsx.executor": "Run",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
@@ -162,18 +158,25 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/include" />
       <recent name="$PROJECT_DIR$/external" />
     </key>
   </component>
   <component name="RunManager" selected="Native Application.3dslink">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="3dslink" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-s $ContentRoot$/cmake-build-debug/totp.3dsx" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TOTP" TARGET_NAME="totp_3dsx" CONFIG_NAME="Debug" version="1" RUN_PATH="/opt/devkitpro/tools/bin/3dslink">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Lime3DS" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="$ContentRoot$/cmake-build-debug/totp.3dsx" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TOTP" TARGET_NAME="totp_3dsx" CONFIG_NAME="Debug" version="1" RUN_PATH="/usr/local/bin/lime3ds">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="firacode" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TOTP" TARGET_NAME="firacode" CONFIG_NAME="Debug">
@@ -207,6 +210,7 @@
       <item itemvalue="CMake Application.tinyhmac" />
       <item itemvalue="CMake Application.firacode" />
       <item itemvalue="CMake Application.totp_3dsx" />
+      <item itemvalue="Native Application.Lime3DS" />
       <item itemvalue="Native Application.3dslink" />
     </list>
   </component>
@@ -221,8 +225,18 @@
       <workItem from="1740076995900" duration="239000" />
       <workItem from="1740077249438" duration="456000" />
       <workItem from="1740077718244" duration="47000" />
-      <workItem from="1740077773514" duration="18922000" />
+      <workItem from="1740077773514" duration="22625000" />
+      <workItem from="1740247961247" duration="5669000" />
     </task>
+    <task id="LOCAL-00001" summary="Restructuring">
+      <option name="closed" value="true" />
+      <created>1740244522526</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740244522526</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +246,10 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Restructuring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Restructuring" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
