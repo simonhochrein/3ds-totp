@@ -57,8 +57,9 @@ int main(int argc, char *argv[]) {
   acInit();
   gfxInitDefault();
   gfxSet3D(true);
+  consoleInit(GFX_BOTTOM, NULL);
 
-  Logging logging;
+  // Logging logging;
 
   printf("Hello World!\n");
 
@@ -76,10 +77,10 @@ int main(int argc, char *argv[]) {
 
   C3D_RenderTarget *top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
   C3D_RenderTarget *right = C2D_CreateScreenTarget(GFX_TOP, GFX_RIGHT);
-  C3D_RenderTarget *bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
+  // C3D_RenderTarget *bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
 
-  std::unique_ptr<totp::scene> scene(new totp::list(top, right, bottom, store));
+  std::unique_ptr<totp::scene> scene(new totp::list(top, right, nullptr, store));
   std::optional<totp::scene_type> next_scene;
 
   while (aptMainLoop()) {
@@ -95,7 +96,7 @@ int main(int argc, char *argv[]) {
     if(next_scene) {
         switch(*next_scene) {
             case totp::scene_type::LIST:
-                scene = std::make_unique<totp::list>(top, right, bottom, store);
+                scene = std::make_unique<totp::list>(top, right, nullptr, store);
                 break;
             case totp::scene_type::SCAN:
                 scene = std::make_unique<totp::scan>(store);

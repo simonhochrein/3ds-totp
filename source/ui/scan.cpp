@@ -14,192 +14,138 @@
 #define WIDTH 400
 #define HEIGHT 240
 
+#define QR_IMAGE_WIDTH WIDTH
+#define QR_IMAGE_HEIGHT HEIGHT
+
+void load_texture(C3D_Tex *tex, void *data, u32 size, u32 width, u32 height) {
+    C3D_TexSetFilter(tex, GPU_NEAREST, GPU_NEAREST);
+
+    u32 pixel_size = size / width / height;
+    memset(tex->data, 0, tex->size);
+    for (u32 x = 0; x < width; x++) {
+        for (u32 y = 0; y < height; y++) {
+            u32 dstPos = ((((y >> 3) * (512 >> 3) + (x >> 3)) << 6) + (
+                              (x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | (
+                                  (y & 4) << 3))) * pixel_size;
+            u32 srcPos = (y * width + x) * pixel_size;
+
+            memcpy(&((u8 *) tex->data)[dstPos], &((u8 *) data)[srcPos], pixel_size);
+        }
+    }
+
+    C3D_TexFlush(tex);
+}
+
 namespace totp {
-    scan::scan(std::shared_ptr<store> secret_store): mutex(0), cancel(0), secret_store(std::move(secret_store)) {
-        capturing = false;
-        finished = false;
-        camera_buffer = new u16[400 * 240];
+    scan::scan(std::shared_ptr<store> secret_store): secret_store(std::move(secret_store)) {
         tex = new C3D_Tex;
         static const Tex3DS_SubTexture subtex = {512, 256, 0, 1, 1, 0};
         image = C2D_Image{.tex = tex, .subtex = &subtex};
         C3D_TexInit(tex, 512, 256, GPU_RGB565);
-        C3D_TexSetFilter(tex, GPU_LINEAR, GPU_LINEAR);
+
+        capturing = false;
+        capture_info.width = QR_IMAGE_WIDTH;
+        capture_info.height = QR_IMAGE_HEIGHT;
+        capture_info.finished = true;
+
+        qr_context = quirc_new();
+        quirc_resize(qr_context, QR_IMAGE_WIDTH, QR_IMAGE_HEIGHT);
+        capture_info.buffer = static_cast<u16 *>(calloc(1, QR_IMAGE_WIDTH * QR_IMAGE_HEIGHT * sizeof(u16)));
     }
 
     scan::~scan() {
-        delete[] camera_buffer;
-        delete tex;
+        // delete[] camera_buffer;
+
+        if (!capture_info.finished) {
+            svcSignalEvent(capture_info.cancel_event);
+            while (!capture_info.finished) {
+                svcSleepThread(1000000);
+            }
+        }
+
+        capturing = false;
+
+        if (capture_info.buffer != nullptr) {
+            memset(capture_info.buffer, 0, QR_IMAGE_WIDTH * QR_IMAGE_HEIGHT * sizeof(u16));
+        }
+
+        if (capture_info.buffer != nullptr) {
+            free(capture_info.buffer);
+            capture_info.buffer = nullptr;
+        }
+
         C3D_TexDelete(tex);
+        delete tex;
+
+        if (qr_context != nullptr) {
+            quirc_destroy(qr_context);
+            qr_context = nullptr;
+        }
     }
 
     std::optional<scene_type> scan::update() {
         std::optional<scene_type> result;
 
-        const auto kDown = hidKeysDown();
-
-        if (kDown & KEY_START) {
-            cleanup();
-            result = scene_type::EXIT;
-        }
-
-        if (kDown & KEY_B) {
-            cleanup();
-            result = scene_type::LIST;
-        }
-
-        if (finished) {
-            cleanup();
+        if (hidKeysDown() & KEY_B) {
             result = scene_type::LIST;
         }
 
         if (!capturing) {
-            mutex = 0;
-            svcCreateEvent(&cancel, RESET_STICKY);
-            svcCreateMutex(&mutex, false);
-            if (threadCreate(reinterpret_cast<ThreadFunc>(cam_thread), this, 0x10000,
-                             0x1A, 0, true) != nullptr) {
-                capturing = true;
-            } else {
-                cleanup();
-                result = scene_type::EXIT;
+            Result cap_res = camera_task(&capture_info);
+            if (R_FAILED(cap_res)) {
+                return scene_type::LIST;
             }
+            capturing = true;
         }
-        svcWaitSynchronization(mutex, U64_MAX);
-        for (u32 x = 0; x < 400; x++) {
-            for (u32 y = 0; y < 240; y++) {
-                u32 dstPos = ((((y >> 3) * (512 >> 3) + (x >> 3)) << 6) +
-                              ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) |
-                               ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) *
-                             2;
-                const u32 srcPos = (y * 400 + x) * 2;
-                memcpy(&static_cast<u8 *>(image.tex->data)[dstPos], &reinterpret_cast<u8 *>(camera_buffer)[srcPos],
-                       2);
+
+        if (capture_info.finished) {
+            if (R_FAILED(capture_info.result)) {
+                printf("Failed to capture %d\n", capture_info.result);
             }
+
+            return scene_type::LIST;
         }
-        svcReleaseMutex(mutex);
+
+        svcWaitSynchronization(capture_info.mutex, U64_MAX);
+        load_texture(image.tex, capture_info.buffer, QR_IMAGE_WIDTH * QR_IMAGE_HEIGHT * sizeof(u16), QR_IMAGE_WIDTH,
+                     QR_IMAGE_HEIGHT);
+        svcReleaseMutex(capture_info.mutex);
 
         C2D_DrawImageAt(image, 0, 0, 0.5f, nullptr, 1, 1);
 
-        return result;
-    }
 
-    void scan::cam_thread(scan *app) {
-        Handle events[3] = {};
-        events[0] = app->cancel;
-        u32 transferUnit;
+        int w = 0;
+        int h = 0;
+        uint8_t* qrBuf = quirc_begin(qr_context, &w, &h);
 
-        const auto buffer = new u16[400 * 240];
-        camInit();
-        CAMU_SetSize(SELECT_OUT1, SIZE_CTR_TOP_LCD, CONTEXT_A);
-        CAMU_SetOutputFormat(SELECT_OUT1, OUTPUT_RGB_565, CONTEXT_A);
-        CAMU_SetFrameRate(SELECT_OUT1, FRAME_RATE_30);
-        CAMU_SetNoiseFilter(SELECT_OUT1, true);
-        CAMU_SetAutoExposure(SELECT_OUT1, true);
-        CAMU_SetAutoWhiteBalance(SELECT_OUT1, true);
-        CAMU_Activate(SELECT_OUT1);
-        CAMU_GetBufferErrorInterruptEvent(&events[2], PORT_CAM1);
-        CAMU_SetTrimming(PORT_CAM1, false);
-        CAMU_GetMaxBytes(&transferUnit, 400, 240);
-        CAMU_SetTransferBytes(PORT_CAM1, transferUnit, 400, 240);
-        CAMU_ClearBuffer(PORT_CAM1);
-        CAMU_SetReceiving(&events[1], buffer, PORT_CAM1, 400 * 240,
-                          static_cast<s16>(transferUnit));
-        CAMU_StartCapture(PORT_CAM1);
-        bool cancel = false;
-        while (!cancel) {
-            s32 index = 0;
-            svcWaitSynchronizationN(&index, events, 3, false, U64_MAX);
-            switch (index) {
-                case 0:
-                    cancel = true;
-                    break;
-                case 1: {
-                    svcCloseHandle(events[1]);
-                    events[1] = 0;
-                    svcWaitSynchronization(app->mutex, U64_MAX);
-                    memcpy(app->camera_buffer, buffer, 400 * 240 * sizeof(u16));
-                    if (app->do_scan()) {
-                        app->should_go_back = true;
-                    }
-                    GSPGPU_FlushDataCache(app->camera_buffer, 400 * 240 * sizeof(u16));
-                    svcReleaseMutex(app->mutex);
-                    CAMU_SetReceiving(&events[1], buffer, PORT_CAM1, 400 * 240 * sizeof(u16),
-                                      static_cast<s16>(transferUnit));
-                    break;
-                }
-                case 2:
-                    svcCloseHandle(events[1]);
-                    events[1] = 0;
-                    CAMU_ClearBuffer(PORT_CAM1);
-                    CAMU_SetReceiving(&events[1], buffer, PORT_CAM1, 400 * 240 * sizeof(u16),
-                                      static_cast<s16>(transferUnit));
-                    CAMU_StartCapture(PORT_CAM1);
-                    break;
-                default:
-                    break;
+        svcWaitSynchronization(capture_info.mutex, U64_MAX);
+
+        for(int x = 0; x < w; x++) {
+            for(int y = 0; y < h; y++) {
+                u16 px = capture_info.buffer[y * QR_IMAGE_WIDTH + x];
+                qrBuf[y * w + x] = (u8) (((((px >> 11) & 0x1F) << 3) + (((px >> 5) & 0x3F) << 2) + ((px & 0x1F) << 3)) / 3);
             }
         }
-        CAMU_StopCapture(PORT_CAM1);
 
-        bool busy = false;
-        while (R_SUCCEEDED(CAMU_IsBusy(&busy, PORT_CAM1)) && busy) {
-            svcSleepThread(1000000);
-        }
+        svcReleaseMutex(capture_info.mutex);
 
-        CAMU_ClearBuffer(PORT_CAM1);
-        CAMU_Activate(SELECT_NONE);
-        camExit();
-        delete[] buffer;
-        for (unsigned long &event: events) {
-            if (event != 0) {
-                svcCloseHandle(event);
-                event = 0;
-            }
-        }
-        svcCloseHandle(app->mutex);
-        app->finished = true;
-    }
+        quirc_end(qr_context);
 
-    void scan::cleanup() {
-        svcSignalEvent(cancel);
-        while (!finished) {
-            svcSleepThread(1000000);
-        }
-        capturing = false;
-    }
+        int qrCount = quirc_count(qr_context);
+        for(int i = 0; i < qrCount; i++) {
+            quirc_code qrCode;
+            quirc_extract(qr_context, i, &qrCode);
 
-    bool scan::do_scan() {
-        quirc *ctx = quirc_new();
-        quirc_resize(ctx, WIDTH, HEIGHT);
-        int w, h;
-        uint8_t *qrBuf = quirc_begin(ctx, &w, &h);
+            quirc_data qrData;
 
-        for (int x = 0; x < w; x++) {
-            for (int y = 0; y < h; y++) {
-                u16 px = camera_buffer[y * WIDTH + x];
-                qrBuf[y * w + x] = (u8) (((((px >> 11) & 0x1F) << 3) +
-                                          (((px >> 5) & 0x3F) << 2) + ((px & 0x1F) << 3)) /
-                                         3);
-            }
-        }
-        quirc_end(ctx);
-
-        for (int i = 0; i < quirc_count(ctx); i++) {
-            quirc_code code{};
-            quirc_data data{};
-
-            quirc_extract(ctx, i, &code);
-            if (const quirc_decode_error_t err = quirc_decode(&code, &data); err == 0) {
-                const std::string_view output(reinterpret_cast<const char *>(data.payload), data.payload_len);
-
+            if(const quirc_decode_error_t err = quirc_decode(&qrCode, &qrData); err == 0) {
+                const std::string_view output(reinterpret_cast<const char *>(qrData.payload), qrData.payload_len);
                 if (urlparser url(output); url.is_valid()) {
                     secret_store->add_entry(url.get_entry());
-                    quirc_destroy(ctx);
-                    return true;
                 }
+                return scene_type::LIST;
             }
         }
-        quirc_destroy(ctx);
-        return false;
+        return result;
     }
-} // namespace totp
+}

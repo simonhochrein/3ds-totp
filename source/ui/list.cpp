@@ -132,9 +132,9 @@ namespace totp {
             render_rows(right, iod);
         }
 
-        C2D_TargetClear(bottom, clrWhite);
-        C2D_SceneBegin(bottom);
-        draw_text("Selected " + std::to_string(selected_item), {BOT_WIDTH/2, BOT_HEIGHT/2 - 10}, 1, C2D_AlignCenter);
+        // C2D_TargetClear(bottom, clrWhite);
+        // C2D_SceneBegin(bottom);
+        // draw_text("Selected " + std::to_string(selected_item), {BOT_WIDTH/2, BOT_HEIGHT/2 - 10}, 1, C2D_AlignCenter);
 
         // C2D_DrawRectSolid(BOT_WIDTH-40, BOT_HEIGHT-40, 0, 40, 40, clrBlue);
         // touchPosition touch;
@@ -173,6 +173,8 @@ namespace totp {
         C3D_Mtx mtx;
         C2D_ViewSave(&mtx);
         C2D_ViewTranslate(0, -scroll_y);
+
+        draw_text("List", {0, 0}, 1);
 
 
         const auto entries = secret_store->get_entries();
