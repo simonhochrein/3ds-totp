@@ -34,14 +34,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80782eb4-7a01-4c38-9289-977759542143" name="Changes" comment="Debugging WIP">
-      <change afterPath="$PROJECT_DIR$/include/camera_task.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/camera_task.cpp" afterDir="false" />
+    <list default="true" id="80782eb4-7a01-4c38-9289-977759542143" name="Changes" comment="Debugging WIP 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/ui/scan.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/ui/scan.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/camera_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/camera_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/store.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/store.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/ui/list.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/ui/list.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/ui/scan.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/ui/scan.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/urlparser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/urlparser.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +217,7 @@
       <workItem from="1740077249438" duration="456000" />
       <workItem from="1740077718244" duration="47000" />
       <workItem from="1740077773514" duration="22625000" />
-      <workItem from="1740247961247" duration="11986000" />
+      <workItem from="1740247961247" duration="15520000" />
     </task>
     <task id="LOCAL-00001" summary="Restructuring">
       <option name="closed" value="true" />
@@ -237,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740253855344</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Debugging WIP 2">
+      <option name="closed" value="true" />
+      <created>1740260196596</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740260196596</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +257,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Restructuring" />
     <MESSAGE value="Debugging WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="Debugging WIP" />
+    <MESSAGE value="Debugging WIP 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Debugging WIP 2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

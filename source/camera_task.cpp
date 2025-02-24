@@ -68,7 +68,7 @@ namespace totp {
                                                             (s16) transfer_unit);
                                     break;
                                 case EVENT_BUFFER_ERROR:
-                                    printf("Buffer error\n");
+                                    // printf("Buffer error\n");
                                     svcCloseHandle(events[EVENT_RECV]);
                                     events[EVENT_RECV] = 0;
 

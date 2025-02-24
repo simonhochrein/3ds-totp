@@ -28,13 +28,20 @@ namespace totp {
 
         auto query = uri.get_query();
         size_t pos_start = 0, pos_end = 0;
-        while ((pos_end = query.find('&', pos_start)) != std::string::npos) {
-            auto pair = query.substr(pos_start, pos_end - pos_start);
-            if (pair.find("secret=") != std::string::npos) {
-                secret = pair.substr(pair.find('=') + 1);
-                break;
+        if (query.find('&') != std::string::npos) {
+            while ((pos_end = query.find('&', pos_start)) != std::string::npos) {
+                auto pair = query.substr(pos_start, pos_end - pos_start);
+                std::cout << pair << std::endl;
+                if (pair.find("secret=") != std::string::npos) {
+                    secret = pair.substr(pair.find('=') + 1);
+                    break;
+                }
+                pos_start = pos_end + 1;
             }
-            pos_start = pos_end + 1;
+        } else {
+            if (query.find("secret=") != std::string::npos) {
+                secret = query.substr(query.find('=') + 1);
+            }
         }
         valid = true;
     }
@@ -44,6 +51,7 @@ namespace totp {
     }
 
     otp_entry urlparser::get_entry() const {
+        std::cout << label << ":" << secret << " : " << base32_decode(secret) << std::endl;
         return otp_entry{label, username, base32_decode(secret)};
     }
 

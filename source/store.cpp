@@ -23,7 +23,7 @@ struct store_headers {
 
 namespace totp {
     store::store() {
-        // load_entries();
+        load_entries();
     }
 
     void store::add_entry(const otp_entry &entry) {
@@ -73,6 +73,7 @@ namespace totp {
         std::cout.write(headers.magic, 4);
         std::cout << std::endl << headers.count << std::endl;
 
+        entries.clear();
         for (int i = 0; i < headers.count; ++i) {
             store_entry entry{};
             file.read(reinterpret_cast<char *>(&entry), sizeof(store_entry));
